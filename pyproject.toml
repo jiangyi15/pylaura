@@ -1,0 +1,14 @@
+[project]
+name = 'pylaura'
+version = '0.0.1'
+description = 'Laura++ binding for Python, using cffi'
+readme = 'README.md'
+requires-python = '>=3.8'
+license = {text = 'LGPL'}
+authors = [
+  {name = 'Yi Jiang', email = 'jiangyi15@mails.ucas.ac.cn'},
+]
+
+[build-system]
+build-backend = 'mesonpy'
+requires = ['meson-python', 'cffi']
