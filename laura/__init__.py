@@ -13,8 +13,9 @@ class LauraModel:
         self.n_amp = lib.model_getnTotAmp(self.model)
 
     def init_from_json(self, data):
-        with tempfile.NamedTemporaryFile(delete_on_close=True) as fp:
-            json.dump({"model": data}, fp)
+        with tempfile.NamedTemporaryFile() as fp:
+            with open(fp.name, "w") as f:
+                json.dump({"model": data}, f)
             lib.model_init(self.model, fp.name.encode(), "model".encode())
         self.n_amp = lib.model_getnTotAmp(self.model)
 
@@ -24,6 +25,11 @@ class LauraModel:
         for i in range(self.n_amp):
             ret.append(lib.model_getDynamicAmp(self.model, i))
         return ret
+
+    def res_index(self, name):
+        if not lib.model_hasResonance(self.model, name.encode()):
+            raise IndexError("not found res {}".format(name))
+        return lib.model_resonanceIndex(self.model, name.encode())
 
     def __call__(self, m13Sq, m23Sq):
         shape = np.broadcast(m13Sq, m23Sq).shape

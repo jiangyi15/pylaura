@@ -21,18 +21,17 @@ cd pylaura
 pip install .
 ```
 
-If your Laura installation is not in the standard location.
-You can use `CFLAGS`, `CXXFLAGS` and `LDFLAGS` enviroment variable to install.
-For example, if you build Laura++ in the `../build` location, you can use the following command
-```
-CFLAG=-I`pwd`/../build/inc CXXFLAG=-I`pwd`/../build/inc LDFLAG=-L`pwd`/../build/lib   pip install .
-```
-
 Or you can directly for github
 ```
 pip install git+https://github.com/jiangyi15/pylaura.git
 ```
 
+If your Laura++ installation is not in the standard location.
+You can use `CFLAGS`, `CXXFLAGS` and `LDFLAGS` enviroment variable to install.
+For example, if you build Laura++ in the `../build` location, you can use the following command
+```
+CFLAG=-I`pwd`/../build/inc CXXFLAG=-I`pwd`/../build/inc LDFLAG=-L`pwd`/../build/lib   pip install .
+```
 
 Examples
 --------

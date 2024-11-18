@@ -5,8 +5,6 @@
 #include "LauComplex.hh"
 #include <vector>
 
-static std::vector<LauIsobarDynamics*> global_models;
-
 
 extern "C" {
 
@@ -44,11 +42,26 @@ double _Complex model_getDynamicAmp(void* model_ptr, int res_id) {
     return { amp.re(),amp.im()};
 }
 
+double _Complex model_getFullAmplitude(void* model_ptr, int res_id) {
+    LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
+    LauComplex amp = model->getFullAmplitude(res_id);
+    return { amp.re(),amp.im()};
+}
+
+int model_hasResonance(void* model_ptr, char* name) {
+    LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
+    return model->hasResonance(name) ? 1 : 0;
+}
+
+int model_resonanceIndex(void* model_ptr, char* name) {
+    LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
+    return model->resonanceIndex(name);
+}
+
 int model_getnTotAmp(void* model_ptr) {
     LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
     return model->getnTotAmp();
 }
-
 
 
 }

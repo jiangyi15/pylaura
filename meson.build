@@ -9,6 +9,7 @@ install_subdir(
 
 ext_src = custom_target(
     command: [py, files('laura_build.py')],
+    input : ['laura.h', 'laura.cpp'],
     output: ['_laura_lib.c']
 )
 
