@@ -19,10 +19,19 @@ def support_broadcast(f):
     return _f
 
 
+def read_vetoes_json(data):
+    with tempfile.NamedTemporaryFile() as fp:
+        with open(fp.name, "w") as f:
+            json.dump({"model": data}, f)
+    return lib.create_vetoes_jsonfile(fp.name.encode(), "model".encode())
 
 class LauraModel:
-    def __init__(self, p0, p1, p2, p3):
-        self.model = lib.create_model(p0.encode(), p1.encode(), p2.encode(), p3.encode())
+    def __init__(self, p0, p1, p2, p3, veto=None):
+        if veto is not None:
+            veto = read_vetoes_json(veto)
+            self.model = lib.create_model_withvetoes(p0.encode(), p1.encode(), p2.encode(), p3.encode(), veto)
+        else:
+            self.model = lib.create_model(p0.encode(), p1.encode(), p2.encode(), p3.encode())
         self.n_amp = 0
 
     def init_from_jsonfile(self, json_file, item_name):

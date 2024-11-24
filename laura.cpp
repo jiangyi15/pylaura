@@ -16,6 +16,19 @@ void* create_model(char * p0, char * p1, char* p2, char* p3) {
     return model;
 }
 
+void* create_model_withvetoes(char * p0, char * p1, char* p2, char* p3, void* vetos) {
+    LauDaughters* dau = new LauDaughters(p0, p1, p2, p3, kFALSE);
+    LauVetoes* veto = (LauVetoes*)vetos;
+    LauEffModel* eff = new LauEffModel(dau, veto);
+    LauIsobarDynamics* model = new LauIsobarDynamics(dau, eff);
+    return model;
+}
+
+void* create_vetoes_jsonfile(char* json_file, char* item_name){
+    return LauVetoes::readFromJson( json_file, item_name ).get();
+}
+
+
 void delete_model(void* model_ptr) {
     LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
     delete model;
