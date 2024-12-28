@@ -6,6 +6,8 @@
 #include <vector>
 #include <complex.h>
 
+static std::unique_ptr<LauVetoes> vetos;
+
 extern "C" {
 
 void* create_model(char * p0, char * p1, char* p2, char* p3) {
@@ -25,7 +27,8 @@ void* create_model_withvetoes(char * p0, char * p1, char* p2, char* p3, void* ve
 }
 
 void* create_vetoes_jsonfile(char* json_file, char* item_name){
-    return LauVetoes::readFromJson( json_file, item_name ).get();
+    vetos = LauVetoes::readFromJson( json_file, item_name );
+    return vetos.get();
 }
 
 
@@ -80,7 +83,7 @@ int model_resonanceIndex(void* model_ptr, char* name) {
 void model_updateCoeffs(void* model_ptr, double _Complex* coeffs, size_t n) {
     LauIsobarDynamics*  model = (LauIsobarDynamics*)model_ptr;
     std::vector<LauComplex> coeffs_v;
-    for (size_t i;i < n; i++) coeffs_v.push_back(LauComplex(creal(coeffs[i]), cimag(coeffs[i])));
+    for (size_t i=0;i < n; i++) coeffs_v.push_back(LauComplex(creal(coeffs[i]), cimag(coeffs[i])));
     model->updateCoeffs(coeffs_v);
 }
 

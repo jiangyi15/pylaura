@@ -23,7 +23,8 @@ def read_vetoes_json(data):
     with tempfile.NamedTemporaryFile() as fp:
         with open(fp.name, "w") as f:
             json.dump({"model": data}, f)
-    return lib.create_vetoes_jsonfile(fp.name.encode(), "model".encode())
+        ret = lib.create_vetoes_jsonfile(fp.name.encode(), "model".encode())
+    return ret
 
 class LauraModel:
     def __init__(self, p0, p1, p2, p3, veto=None):

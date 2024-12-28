@@ -22,7 +22,7 @@ if "LAURA_LIBRARY_DIR" in os.environ:
 
 extra_compile_args = []
 if "CFLAGS" in os.environ:
-    extra_compile_args.append(os.environ["CFLAGS"])
+    extra_compile_args += os.environ["CFLAGS"].split(" ")
 
 extra_link_args = []
 if "LDFLAGS" in os.environ:
